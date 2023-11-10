@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "-": "^0.0.1",
+    "chalk": "^5.2.0",
+    "colorts": "^0.1.63"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.6"
+  }
+}

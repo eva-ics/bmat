@@ -1,0 +1,235 @@
+//This project is adapted for mobile, tablet devices. The "mixin_rules" mixin is used to set the media rules. All styles for a specific device are in the rules
+//   @include media(mobile | tablet | desktop) , where mobile, tablet and desktop are names of rules from mixin.
+
+//The CSS rule targets the input element with the class "eva.login".
+input.eva.login {
+  width: 100%;
+  margin-top: 5px;
+  border-radius: 2px;
+  border: 0.5px solid #d0d0d0;
+  background-color: white;
+  font-size: 18px;
+  color: black;
+  padding: 15px;
+  //The CSS rule targets the input element with the class "eva.login.checkbox".
+  &.checkbox{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transform: translateY(-4px);
+  }
+
+  &:focus{
+    outline: none;
+    border: 0.5px solid #0085ff;
+  }
+}
+
+div.eva.login.row.remember > label {
+  cursor: pointer;
+}
+
+//The CSS rule targets the button element with the class "eva.login".
+button.eva.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 2px;
+  margin-top: 20px;
+  width: 100%;
+  padding: 13px 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+  background-color: #336699;
+  transition: 0.2s;
+  cursor: pointer;
+
+  @include media(desktop){
+    padding: 16px 0;
+    font-size: 22px;
+
+    &:hover{
+      background-color: #3293ea;
+      transition: 0.2s;
+    }
+  }
+}
+
+// progress status
+div.eva.login.progress {
+  color: #d0d0d0;
+}
+
+//The CSS rule targets the button element with the class "eva.login.container". Parent element for login form and elements inside.
+div.eva.login.container {
+  padding: 0 10px;
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+//The CSS rule targets the button element with the class "eva.login.form-container".
+div.eva.login.form-container{
+  width: 100%;
+  margin-top: 50px;
+
+  @include media(tablet){
+    width: 390px;
+  }
+
+  @include media(desktop){
+    margin-top: 20px;
+  }
+}
+
+//The CSS rule targets the form element with the class "eva.login".
+form.eva.login{
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+//The CSS rule targets the div element with the class "eva.login.logo".
+div.eva.login.logo {
+  //margin-top: 60px;
+  height: 60px;
+  display: inline-block;
+
+  &:before{
+    content: url("https://www.bohemia-automation.com/images/icons/evalogo.svg");
+  }
+}
+
+//The CSS rule targets the div element with the class "eva.login.header".
+div.eva.login.header {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: normal;
+  color: #0085ff;
+
+  &:before{
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 280px;
+    content: "EVA ICS HMI";
+    text-align: center;
+    color: #fff;
+
+    @include media(desktop){
+      font-size: 30px;
+    }
+  }
+
+  @include media(desktop){
+    font-size: 30px;
+  }
+}
+
+//The CSS rule targets the div element with the class "eva.login.row".
+div.eva.login.row {
+  width: 100%;
+  margin-bottom: 5px;
+}
+//The CSS rule targets the div element with the class "eva.login.row.text". Parent container for input + label
+div.eva.login.row.text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+//The CSS rule targets the label element inside element with the class "eva.login.row.text".
+div.eva.login.row.text > label {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #c1c1c1;
+
+  @include media(desktop){
+    font-size: 16px;
+  }
+}
+
+//The CSS rule targets the div element with the classes "eva.login.widerow".
+div.eva.login.widerow {
+  margin-bottom: 5px;
+  color: #d0d0d0;
+}
+
+//The CSS rule targets the div element with the classes "eva.login.row.remember". Styles for container with checkbox an label.
+div.eva.login.row.remember {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #fff;
+
+  &>label{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+    @include media(desktop){
+      font-size: 16px;
+    }
+  }
+}
+
+//The CSS rule targets the div element with the class "eva.login.qr".
+div.eva.login.qr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+//The CSS rule targets the div element with the class "eva.login.label".
+div.eva.login.label {
+  display: inline-block;
+  width: 80px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+//The CSS rule targets the div element with the class "eva.login.error".
+div.eva.login.error {
+  color: red;
+  font-weight: bold;
+}
+
+//The CSS rule targets the span elements with the class "eva.state". Styles for success | disconnect | error messages.
+span.eva.state {
+
+  &.ok{
+
+  }
+
+  &.error{
+    color: red;
+    font-weight: bold;
+  }
+
+  &.disconnected{
+    color: #999;
+  }
+}

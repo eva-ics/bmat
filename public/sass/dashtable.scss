@@ -1,0 +1,130 @@
+.bmat-dashtable-container {
+}
+
+.bmat-dashtable-container-inner {
+}
+
+.bmat-dashtable-title {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.75;
+  letter-spacing: 0.16px;
+  margin: 0;
+
+  padding: 10px;
+
+  @include media(tablet) {
+    font-size: 18px;
+    padding: 20px 0 0 20px;
+  }
+}
+
+.bmat-dashtable-filter {
+  font-size: 12px;
+  padding: 10px;
+
+  @include media(tablet) {
+    padding: 20px;
+    font-size: 14px;
+  }
+
+  > div {
+    margin-bottom: 5px;
+    @include media(tablet) {
+      display: inline-block;
+      margin: 0px;
+    }
+  }
+
+  > div > label > input {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  > div > label > select {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+
+  @include media(tablet) {
+    > div > label > input {
+      font-size: 14px;
+    }
+    > div > label > select {
+      font-size: 14px;
+    }
+  }
+}
+
+.bmat-dashtable-filter-empty {
+  @include media(tablet) {
+    padding: 10px;
+  }
+}
+
+.bmat-dashtable-table-container {
+  @include media(tablet) {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+  }
+  overflow: auto;
+}
+
+.bmat-dashtable {
+  width: 100%;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 0.8;
+  letter-spacing: 0.12px;
+  overflow: auto;
+
+  & button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 1px 5px;
+    border-radius: 2px;
+    border: none;
+  }
+  & button:disabled {
+    cursor: auto;
+  }
+
+  .table-action {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    @include media(desktop) {
+      gap: 20px;
+    }
+  }
+}
+
+.bmat-dashtable-header {
+  padding: 7px;
+  font-size: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: left;
+  white-space: nowrap;
+
+  @include media(tablet) {
+    font-size: 14px;
+  }
+
+  user-select: none;
+  cursor: pointer;
+}
+
+.bmat-dashtable-row-even {
+}
+
+.bmat-dashtable-row-odd {
+}
