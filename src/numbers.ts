@@ -63,7 +63,7 @@ export const parseNumber = (
   if (value.length === 0 && params?.allow_undefined) {
     return undefined;
   }
-  const val = params?.float ? parseFloat(value) : parseInt(value);
+  const val = parseFloat(value);
   if (isNaN(val)) {
     if (params?.allow_nan) {
       return val;
@@ -75,6 +75,9 @@ export const parseNumber = (
   }
   if (params?.max !== undefined && val > params.max) {
     throw new Error(`the value must be ${params.max} or less`);
+  }
+  if (!params?.float && val % 1) {
+    throw new Error("the value must be integer");
   }
   return val;
 };

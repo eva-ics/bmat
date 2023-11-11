@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "-": "^0.0.1",
-    "colorts": "^0.1.63"
+    "-": "^0.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.2.6"
