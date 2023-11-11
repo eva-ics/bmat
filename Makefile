@@ -11,5 +11,5 @@ upload:
 
 doc:
 	rm -rf docs
-	npx typedoc src/*.ts
+	typedoc
 	cd docs && gsutil -m cp -a public-read -r . gs://pub.bma.ai/dev/docs/bmat/
