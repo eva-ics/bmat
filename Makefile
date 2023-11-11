@@ -7,7 +7,7 @@ bump:
 pub: all upload doc
 
 upload:
-	npm publish --access public
+	cd dist && npm publish --access public
 
 doc:
 	rm -rf docs

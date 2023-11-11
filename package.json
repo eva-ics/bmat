@@ -1,47 +1,46 @@
 {
   "name": "bmat",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "files": [
-    "dist",
-    "*.d.ts"
+    "*"
   ],
   "types": "./bmat.d.ts",
-  "main": "./dist/bmat.cjs",
-  "module": "./dist/bmat.js",
+  "main": "./bmat.cjs",
+  "module": "./bmat.js",
   "exports": {
     "./dashtable": {
-      "import": "./dist/dashtable.js",
-      "require": "./dist/dashtable.cjs"
+      "import": "./dashtable.js",
+      "require": "./dashtable.cjs"
     },
     "./dom": {
-      "import": "./dist/dom.js",
-      "require": "./dist/dom.cjs"
+      "import": "./dom.js",
+      "require": "./dom.cjs"
     },
     "./hooks": {
-      "import": "./dist/hooks.js",
-      "require": "./dist/hooks.cjs"
+      "import": "./hooks.js",
+      "require": "./hooks.cjs"
     },
     "./log": {
-      "import": "./dist/log.js",
-      "require": "./dist/log.cjs"
+      "import": "./log.js",
+      "require": "./log.cjs"
     },
     "./numbers": {
-      "import": "./dist/numbers.js",
-      "require": "./dist/numbers.cjs"
+      "import": "./numbers.js",
+      "require": "./numbers.cjs"
     },
     "./time": {
-      "import": "./dist/time.js",
-      "require": "./dist/time.cjs"
+      "import": "./time.js",
+      "require": "./time.cjs"
     },
     "./tools": {
-      "import": "./dist/tools.js",
-      "require": "./dist/tools.cjs"
+      "import": "./tools.js",
+      "require": "./tools.cjs"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc src/*.ts --allowImportingTsExtensions --declaration --jsx react-jsx --lib es2020,dom,es2021.String --emitDeclarationOnly --declarationDir dist/ && cp ./d/bmat.d.ts dist/ && cp ./dist/*.d.ts ."
+    "build": "vite build && tsc src/*.ts --allowImportingTsExtensions --declaration --jsx react-jsx --lib es2020,dom,es2021.String --emitDeclarationOnly --declarationDir dist/ && cp ./d/bmat.d.ts dist/ && cp package.json dist/"
   },
   "keywords": [
     "browser",
