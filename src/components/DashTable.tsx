@@ -193,7 +193,7 @@ export const DashTable = ({
                     <th
                       className="bmat-dashtable-header"
                       onClick={() => handleColClick(index)}
-                      key={col}
+                      key={`h${index}`}
                     >
                       {col}
                       {col_arrow}
