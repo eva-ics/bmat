@@ -28,7 +28,7 @@ export interface DashTableRow {
 }
 export interface DashTableColData {
   value: any;
-  sort_value: any;
+  sort_value?: any;
   className?: string;
 }
 
