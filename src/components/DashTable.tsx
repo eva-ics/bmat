@@ -160,9 +160,9 @@ export const DashTable = ({
   };
 
   return (
-    <div className={`bmat-dashtable-container ${className}`}>
+    <div className={`bmat-dashtable-container ${className || ""}`}>
       {title ? <div className="bmat-dashtable-title">{title}</div> : null}
-      <div className={`bmat-dashtable-container-inner ${innerClassName}`}>
+      <div className={`bmat-dashtable-container-inner ${innerClassName || ""}`}>
         {header}
         {filter ? (
           <div className="bmat-dashtable-filter">
@@ -210,17 +210,19 @@ export const DashTable = ({
                       key={index}
                       className={
                         "bmat-dashtable-row " +
-                        (index % 2 === 0
-                          ? "bmat-dashtable-row-even "
-                          : "bmat-dashtable-row-odd ") +
-                        row.className
+                          (index % 2 === 0
+                            ? "bmat-dashtable-row-even "
+                            : "bmat-dashtable-row-odd ") +
+                          row.className || ""
                       }
                     >
                       {row.data.map((col, index) => {
                         return (
                           <td
                             key={`c${index}`}
-                            className={"bmat-dashtable-col " + col?.className}
+                            className={`bmat-dashtable-col ${
+                              col?.className || ""
+                            }`}
                           >
                             {col.value}
                           </td>
