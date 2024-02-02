@@ -19,7 +19,7 @@ export const defaultDashTableColSorting = (): DashTableColSorting => {
   };
 };
 
-export type DashTableFilter = Array<[string, JSX.Element]>;
+export type DashTableFilter = Array<[string | JSX.Element, JSX.Element]>;
 export type DashTableData = Array<DashTableRow>;
 
 export interface DashTableRow {
