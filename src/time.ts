@@ -30,7 +30,7 @@ export const dateRFC3339 = (d: Date, millis?: boolean): string => {
 };
 
 /**
- * Converts a UNIX timestamp to RFC3339 string
+ * Converts a UNIX timestamp number to RFC3339 string
  *
  * @param {number} [ts] - timestamp to convert
  * @param {boolean} [millis] - with milliseconds
@@ -90,3 +90,66 @@ export const formatUptime = (uptime?: number): string | undefined => {
     return formattedUptime.trim();
   }
 };
+
+/**
+ * Timestamp class to work with UNIX timestamps
+ */
+export class Timestamp {
+  t: number;
+  /**
+   * @param {Date|number} src - source (number = UNIX timestamp)
+   */
+  constructor(src?: Date | number) {
+    if (src === null || src === undefined) {
+      this.t = Date.now() / 1000;
+    } else if (typeof src === "number") {
+      this.t = src;
+    } else {
+      this.t = src.getTime() / 1000;
+    }
+  }
+  /**
+   * Adds seconds
+   *
+   * @returns {Timestamp}
+   */
+  addSec(sec: number): Timestamp {
+    this.t += sec;
+    return this;
+  }
+  /**
+   * Substracts seconds
+   *
+   * @returns {Timestamp}
+   */
+  subSec(sec: number): Timestamp {
+    this.t -= sec;
+    return this;
+  }
+  /**
+   * Converts to JS Date
+   *
+   * @returns {Date}
+   */
+  toDate(): Date {
+    return new Date(this.t * 1000);
+  }
+  /**
+   * Converts to number
+   *
+   * @returns {number}
+   */
+  toNumber(): number {
+    return this.t;
+  }
+  /**
+   * Converts to RFC3339 string
+   *
+   * @param {boolean} [millis] - with milliseconds
+   *
+   * @returns {string}
+   */
+  toRFC3339(millis?: boolean): string {
+    return timestampRFC3339(this.t, millis) as string;
+  }
+}

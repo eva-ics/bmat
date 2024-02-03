@@ -154,3 +154,37 @@ export namespace cookies {
     create(name, "", -1, path);
   };
 }
+
+/**
+ * Downloads content as a file
+ *
+ * @param {any} content - file content
+ * @param {string} filename - file name to download as
+ * @param {string} mime - mime type, including encoding for text files
+ *
+ * @returns {void}
+ */
+export const downloadFile = (content: any, filename: string, mime: string) => {
+  const blob = new Blob([content], { type: mime });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", filename);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
+/**
+ * Downloads content as a CVS file
+ *
+ * @param {string} content - file content
+ * @param {string} filename - file name to download as
+ *
+ * @returns {void}
+ */
+export const downloadCSV = (content: string, filename: string) => {
+  downloadFile(content, filename, "text/csv;charset=utf-8;");
+};

@@ -26,6 +26,7 @@ export interface DashTableRow {
   data: Array<DashTableColData>;
   className?: string;
 }
+
 export interface DashTableColData {
   value: any;
   sort_value?: any;
