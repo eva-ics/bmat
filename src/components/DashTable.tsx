@@ -187,6 +187,15 @@ export const DashTable = ({
             <thead>
               <tr>
                 {cols.map((col, index) => {
+                  let col_name;
+                  if (typeof col === "object") {
+                    if (col.enabled !== true) {
+                      return;
+                    }
+                    col_name = col.name || col.id;
+                  } else {
+                    col_name = col;
+                  }
                   let col_arrow;
                   if (index == sort_col) {
                     col_arrow = sort_asc ? "⬇" : "⬆";
@@ -197,7 +206,7 @@ export const DashTable = ({
                       onClick={() => handleColClick(index)}
                       key={`h${index}`}
                     >
-                      {typeof col === "object" ? (col as any).name : col}
+                      {col_name}
                       {col_arrow}
                     </th>
                   );
