@@ -165,7 +165,8 @@ export const createRichFilter = ({
         <span
           title={`toggle ${col.name} column display`}
           className={labelClassName}
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             col.enabled = !col.enabled;
             const nc: ColumnRichInfo[] = [...cols];
             setCols(nc);
@@ -225,7 +226,10 @@ export const createRichFilter = ({
           <div
             title={`clear ${col.name} filter`}
             className="bmat-dashtable-filter-button-remove"
-            onClick={() => setParams({ [col.id]: null })}
+            onClick={(e) => {
+              e.preventDefault();
+              setParams({ [col.id]: null });
+            }}
           >
             {params[col.id] !== null ? (
               <>
