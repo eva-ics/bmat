@@ -150,6 +150,6 @@ export class Timestamp {
    * @returns {string}
    */
   toRFC3339(millis?: boolean): string {
-    return timestampRFC3339(this.t, millis) as string;
+    return dateRFC3339(this.toDate(), millis);
   }
 }
