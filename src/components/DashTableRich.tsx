@@ -26,6 +26,25 @@ export enum DashTableFilterFieldInput {
   SelectWithEmpty = "select_with_empty"
 }
 
+const getfilterActionKindHelp = (kind?: DashTableFilterActionKind): string => {
+  switch (kind) {
+    case DashTableFilterActionKind.Like:
+      return "value must contain a substring";
+    case DashTableFilterActionKind.GreaterEqual:
+      return "value must be greater or equal";
+    case DashTableFilterActionKind.LessEqual:
+      return "value must be less or equal";
+    case DashTableFilterActionKind.Greater:
+      return "value must be greater";
+    case DashTableFilterActionKind.Less:
+      return "value must be less";
+    case DashTableFilterActionKind.Regex:
+      return "value must match a regex";
+    default:
+      return "value must be equal";
+  }
+};
+
 export enum DashTableFilterActionKind {
   Equal = "=",
   Like = "~",
@@ -154,7 +173,9 @@ export const createRichFilter = ({
         >
           {col.name}
         </span>{" "}
-        {col.filterActionKind || "="}
+        <span title={getfilterActionKindHelp(col.filterActionKind)}>
+          {col.filterActionKind || "="}
+        </span>
       </div>
     );
     let input;
