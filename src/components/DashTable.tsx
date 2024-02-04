@@ -6,6 +6,7 @@ import {
   encoderBoolean,
   decoderBoolean
 } from "../hooks/useQueryParams.tsx";
+import { ColumnRichInfo } from "./DashTableRich.tsx";
 
 /**
  * Generates DashTable sorting defaults
@@ -44,7 +45,7 @@ export interface DashTableColSorting {
  * @component
  *
  * @param {Object} props - the component props
- * @param {Array<string>} props.cols - table column names
+ * @param {Array<string|ColumnRichInfo>} props.cols - table column names
  * @param {string} [props.id] - the unique identifier for the table
  * @param {string} [props.title] - table title
  * @param {any} [props.header] - additional content
@@ -73,7 +74,7 @@ export const DashTable = ({
   defaultSortAsc,
   rememberQs
 }: {
-  cols: Array<string>;
+  cols: Array<string | ColumnRichInfo>;
   id?: any;
   title?: string;
   header?: any;
@@ -196,7 +197,7 @@ export const DashTable = ({
                       onClick={() => handleColClick(index)}
                       key={`h${index}`}
                     >
-                      {col}
+                      {typeof col === "object" ? (col as any).name : col}
                       {col_arrow}
                     </th>
                   );

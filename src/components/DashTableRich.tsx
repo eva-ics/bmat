@@ -1,39 +1,115 @@
 import { DashTableFilter, DashTableColData } from "./DashTable.tsx";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { Timestamp } from "../time";
 
 export interface ColumnRichInfo {
   id: string;
   name: string;
   enabled: boolean;
+  columnType?: DashTableColType;
   filterInputSize?: number;
-  filterFieldKind?: DashTableFilterFieldKind;
   filterActionKind?: DashTableFilterActionKind;
+  filterFieldInput?: DashTableFilterFieldInput;
+  filterFieldSelectValues?: any[];
 }
 
-export enum DashTableFilterFieldKind {
+export enum DashTableColType {
   String = "string",
-  Integer = "integer"
+  Integer = "integer",
+  JSON = "json"
+}
+
+export enum DashTableFilterFieldInput {
+  Text = "text",
+  Select = "select",
+  SelectWithEmpty = "select_with_empty"
 }
 
 export enum DashTableFilterActionKind {
   Equal = "=",
-  Like = "~"
+  Like = "~",
+  GreaterEqual = "≥",
+  LessEqual = "≤",
+  Greater = ">",
+  Less = "<",
+  Regex = "(.*)"
 }
 
-const formatValue = (value: string, kind: DashTableFilterFieldKind): any => {
-  switch (kind) {
-    case DashTableFilterFieldKind.String:
-      return value || null;
-      break;
-    case DashTableFilterFieldKind.Integer:
+const formatValue = (value: string, type?: DashTableColType): any => {
+  switch (type) {
+    case DashTableColType.Integer:
       let n: string | number | null = value === "" ? null : parseInt(value);
       if (n !== null && isNaN(n)) {
         n = null;
       }
       return n;
       break;
+    default:
+      return value || null;
+      break;
   }
+};
+
+const escapeCSV = (s: any, columnType?: DashTableColType): string | number => {
+  if (columnType === DashTableColType.JSON) {
+    return escapeCSV(JSON.stringify(s));
+  }
+  if (s === null || s === undefined) return "";
+  if (typeof s === "number") return s;
+  let escapedStr = s.replace(/"/g, '""');
+  return `"${escapedStr}"`;
+};
+
+/**
+ * Generates CSV from data and rich columns
+ *
+ * @param {any[]} data - array of data
+ * @param {ColumnRichInfo[]} cols - columns
+ * @param {string} [timeCol] - time column id
+ *
+ * @returns {DashTableFilter}
+ */
+export const generateDashTableRichCSV = ({
+  data,
+  cols,
+  timeCol
+}: {
+  data: any[];
+  cols: ColumnRichInfo[];
+  timeCol?: string;
+}): string => {
+  const enabledCols = cols.filter((col) => col.enabled);
+  const colIds = enabledCols.map((col) => col.id);
+  const colMap = cols.reduce((acc, item) => {
+    acc.set(item.id, item);
+    return acc;
+  }, new Map<string, ColumnRichInfo>());
+  let csvContent = timeCol ? "time" : "";
+  if (colIds.length > 0) {
+    csvContent += (timeCol ? "," : "") + colIds.join(",") + "\n";
+  }
+  data.forEach((row: any) => {
+    let rt: any[] = [];
+    if (timeCol) {
+      let t = row[timeCol];
+      if (t !== undefined) {
+        if (typeof t === "number") {
+          rt.push(escapeCSV(new Timestamp(row.t).toRFC3339(true)));
+        } else {
+          rt.push(escapeCSV(t.toString()));
+        }
+      }
+    }
+    const rowArray = rt.concat(
+      colIds.map((key) => {
+        const cellValue = row[key];
+        return escapeCSV(cellValue, colMap.get(key)?.columnType);
+      })
+    );
+    csvContent += rowArray.join(",") + "\n";
+  });
+  return csvContent;
 };
 
 /**
@@ -42,10 +118,10 @@ const formatValue = (value: string, kind: DashTableFilterFieldKind): any => {
  * @param {ColumnRichInfo[]} cols - columns
  * @param {(cols: ColumnRichInfo[]) => void} cols - column setter
  * @param { [key: string]: any } params - filter parameters
-   @param {(o: { [key: string]: any }) => void} setParams - setter for parameters
-   @param {string} [className] - a custom label class name
+ * @param {(o: { [key: string]: any }) => void} setParams - setter for parameters
+ * @param {string} [className] - a custom label class name
  *
- * @returns {Coords}
+ * @returns {DashTableFilter}
  */
 export const createRichFilter = ({
   cols,
@@ -81,36 +157,67 @@ export const createRichFilter = ({
         {col.filterActionKind || "="}
       </div>
     );
-    const input = (
+    let input;
+    switch (col.filterFieldInput) {
+      case DashTableFilterFieldInput.Select:
+      case DashTableFilterFieldInput.SelectWithEmpty:
+        input = (
+          <select
+            onChange={(e) =>
+              setParams({
+                [col.id]: formatValue(e.target.value, col.columnType)
+              })
+            }
+            value={params[col.id] === null ? "" : params[col.id]}
+          >
+            {col.filterFieldInput ===
+            DashTableFilterFieldInput.SelectWithEmpty ? (
+              <option value=""></option>
+            ) : (
+              ""
+            )}
+            {col.filterFieldSelectValues?.map((val) => (
+              <option key={val}>{val}</option>
+            ))}
+          </select>
+        );
+        break;
+      default:
+        input = (
+          <input
+            size={col.filterInputSize || 10}
+            value={params[col.id] === null ? "" : params[col.id]}
+            onChange={(e) =>
+              setParams({
+                [col.id]: formatValue(e.target.value, col.columnType)
+              })
+            }
+          />
+        );
+    }
+    const inputBlock = (
       <>
-        <input
-          size={col.filterInputSize || 10}
-          value={params[col.id] === null ? "" : params[col.id]}
-          onChange={(e) =>
-            setParams({
-              [col.id]: formatValue(
-                e.target.value,
-                col.filterFieldKind || DashTableFilterFieldKind.String
-              )
-            })
-          }
-        />
-        <div
-          title={`clear ${col.name} filter`}
-          className="bmat-dashtable-filter-button-remove"
-          onClick={() => setParams({ [col.id]: null })}
-        >
-          {params[col.id] !== null ? (
-            <>
-              <RemoveCircleOutlineIcon fontSize="inherit" />
-            </>
-          ) : (
-            <div className="bmat-dashtable-filter-spacer"></div>
-          )}
-        </div>
+        {input}
+        {col.filterFieldInput === DashTableFilterFieldInput.Select ? (
+          ""
+        ) : (
+          <div
+            title={`clear ${col.name} filter`}
+            className="bmat-dashtable-filter-button-remove"
+            onClick={() => setParams({ [col.id]: null })}
+          >
+            {params[col.id] !== null ? (
+              <>
+                <RemoveCircleOutlineIcon fontSize="inherit" />
+              </>
+            ) : (
+              <div className="bmat-dashtable-filter-spacer"></div>
+            )}
+          </div>
+        )}
       </>
     );
-    return [label, input];
+    return [label, inputBlock];
   });
 
 /**
@@ -119,9 +226,11 @@ export const createRichFilter = ({
  * @param {DashTableColData[]} colsData - column data
  * @param {string} id - column id
  * @param {any} value - column value
-   @param {(o: { [key: string]: any }) => void} [setParams] - setter for the filter parameters
-   @param {any} [sort_value] - column sort value
-   @param {string} [className] - a custom column class name
+ * @param {(o: { [key: string]: any }) => void} [setParams] - setter for the filter parameters
+ * @param {any} [sort_value] - column sort value
+ * @param {string} [className] - a custom column class name
+ *
+ * @returns {void}
  */
 export const pushRichColData = ({
   colsData,

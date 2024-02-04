@@ -10,9 +10,11 @@ export type {
   DashTableColData
 } from "./components/DashTable.tsx";
 export {
+  DashTableColType,
   DashTableFilterActionKind,
-  DashTableFilterFieldKind,
+  DashTableFilterFieldInput,
   createRichFilter,
-  pushRichColData
+  pushRichColData,
+  generateDashTableRichCSV
 } from "./components/DashTableRich.tsx";
 export type { ColumnRichInfo } from "./components/DashTableRich.tsx";
