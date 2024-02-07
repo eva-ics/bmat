@@ -1,6 +1,4 @@
 import { DashTableFilter, DashTableColData } from "./DashTable.tsx";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { Timestamp } from "../time";
 
 export interface ColumnRichInfo {
@@ -139,6 +137,7 @@ export const generateDashTableRichCSV = ({
  * @param { [key: string]: any } params - filter parameters
  * @param {(o: { [key: string]: any }) => void} setParams - setter for parameters
  * @param {string} [className] - a custom label class name
+ * @param {string|JSX.Element} [removeButton] - remove button icon/symbol/element, required for setter
  *
  * @returns {DashTableFilter}
  */
@@ -147,12 +146,14 @@ export const createRichFilter = ({
   setCols,
   params,
   setParams,
+  removeButton,
   className
 }: {
   cols: ColumnRichInfo[];
   setCols: (cols: ColumnRichInfo[]) => void;
   params: { [key: string]: any };
   setParams: (o: { [key: string]: any }) => void;
+  removeButton?: string | JSX.Element;
   className?: string;
 }): DashTableFilter =>
   cols.map((col) => {
@@ -220,7 +221,8 @@ export const createRichFilter = ({
     const inputBlock = (
       <>
         {input}
-        {col.filterFieldInput === DashTableFilterFieldInput.Select ? (
+        {removeButton === undefined ||
+        col.filterFieldInput === DashTableFilterFieldInput.Select ? (
           ""
         ) : (
           <div
@@ -232,9 +234,7 @@ export const createRichFilter = ({
             }}
           >
             {params[col.id] !== null ? (
-              <>
-                <RemoveCircleOutlineIcon fontSize="inherit" />
-              </>
+              <>{removeButton}</>
             ) : (
               <div className="bmat-dashtable-filter-spacer"></div>
             )}
@@ -254,6 +254,7 @@ export const createRichFilter = ({
  * @param {(o: { [key: string]: any }) => void} [setParams] - setter for the filter parameters
  * @param {any} [sort_value] - column sort value
  * @param {string} [className] - a custom column class name
+ * @param {string|JSX.Element} [addButton] - add button icon/symbol/element, required for setter
  *
  * @returns {void}
  */
@@ -264,7 +265,8 @@ export const pushRichColData = ({
   setParams,
   sort_value,
   className,
-  cols
+  cols,
+  addButton
 }: {
   colsData: DashTableColData[];
   id: string;
@@ -273,6 +275,7 @@ export const pushRichColData = ({
   setParams?: (o: { [key: string]: any }) => void;
   sort_value?: any;
   className?: string;
+  addButton?: string | JSX.Element;
 }) => {
   const column = cols.find((column) => column.id === id);
   if (!column?.enabled) {
@@ -282,7 +285,10 @@ export const pushRichColData = ({
     value: (
       <>
         {value}
-        {value === null || value === "" || setParams === undefined ? (
+        {value === null ||
+        value === "" ||
+        setParams === undefined ||
+        addButton === undefined ? (
           ""
         ) : (
           <div
@@ -290,7 +296,7 @@ export const pushRichColData = ({
             className="bmat-dashtable-filter-button-add"
             onClick={() => setParams({ [id]: value })}
           >
-            <AddCircleOutlineIcon fontSize="inherit" />
+            {addButton}
           </div>
         )}
       </>
