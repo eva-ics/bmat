@@ -91,6 +91,7 @@ export const parseNumber = (
  * @param {n} [number] - x value
  *
  * @returns {number|undefined}
+ * @throws if the formula is invalid
  */
 export const calculateFormula = (
   formula: string,
