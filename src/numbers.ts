@@ -87,17 +87,21 @@ export const parseNumber = (
 /**
  * Calculate a user-given formula with x var
  *
- * @param {formula} - formula
+ * @param {string} [formula] - formula
  * @param {n} [number] - x value
  *
  * @returns {number|undefined}
  * @throws if the formula is invalid
  */
 export const calculateFormula = (
-  formula: string,
+  formula?: string,
   n?: number
 ): number | undefined => {
   if (n !== undefined && n !== null) {
-    return evaluate(formula, { x: n });
+    if (!formula || formula === "x") {
+      return n;
+    } else {
+      return evaluate(formula, { x: n });
+    }
   }
 };
