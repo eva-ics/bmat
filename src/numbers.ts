@@ -1,3 +1,5 @@
+import { evaluate } from "mathjs";
+
 /**
  * Formats number to en locale, replacing thousand separator with a custom one if defined
  *
@@ -80,4 +82,21 @@ export const parseNumber = (
     throw new Error("the value must be integer");
   }
   return val;
+};
+
+/**
+ * Calculate a user-given formula with x var
+ *
+ * @param {formula} - formula
+ * @param {n} [number] - x value
+ *
+ * @returns {number|undefined}
+ */
+export const calculateFormula = (
+  formula: string,
+  n?: number
+): number | undefined => {
+  if (n !== undefined && n !== null) {
+    return evaluate(formula, { x: n });
+  }
 };

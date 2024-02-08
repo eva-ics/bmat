@@ -1,6 +1,6 @@
 {
   "name": "bmat",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "type": "module",
   "files": [
     "*"
@@ -54,7 +54,8 @@
   "homepage": "https://github.com/eva-ics/bmat/",
   "peerDependecies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "mathjs": "^12.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
