@@ -85,17 +85,27 @@ export const parseNumber = (
 };
 
 /**
- * Calculate a user-given formula with x var
+ * Calculate a user-given formula with x var for a single number or an array of
+ * numbers
  *
  * @param {string} [formula] - formula
- * @param {n} [number] - x value
+ * @param {number|number[]} [n] - x value(s)
  *
- * @returns {number|undefined}
+ * @returns {(number|undefined)[]|number|undefined}
  * @throws if the formula is invalid
  */
 export const calculateFormula = (
   formula?: string,
-  n?: number
+  n?: number | (number | undefined | null)[] | null
+): (number | undefined)[] | number | undefined => {
+  return Array.isArray(n)
+    ? calculateFormulaBulk(formula, n)
+    : calculateFormulaSingle(formula, n);
+};
+
+const calculateFormulaSingle = (
+  formula?: string,
+  n?: number | null
 ): number | undefined => {
   if (n !== undefined && n !== null) {
     if (!formula || formula === "x") {
@@ -103,5 +113,16 @@ export const calculateFormula = (
     } else {
       return evaluate(formula, { x: n });
     }
+  }
+};
+
+const calculateFormulaBulk = (
+  formula?: string,
+  n?: (number | undefined | null)[]
+): (number | undefined)[] | undefined => {
+  if (n !== undefined && n !== null) {
+    return n.map((a) => {
+      return calculateFormulaSingle(formula, a);
+    });
   }
 };
