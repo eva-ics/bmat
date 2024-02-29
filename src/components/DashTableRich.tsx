@@ -15,13 +15,13 @@ export interface ColumnRichInfo {
 export enum DashTableColType {
   String = "string",
   Integer = "integer",
-  JSON = "json"
+  JSON = "json",
 }
 
 export enum DashTableFilterFieldInput {
   Text = "text",
   Select = "select",
-  SelectWithEmpty = "select_with_empty"
+  SelectWithEmpty = "select_with_empty",
 }
 
 const getfilterActionKindHelp = (kind?: DashTableFilterActionKind): string => {
@@ -50,7 +50,7 @@ export enum DashTableFilterActionKind {
   LessEqual = "≤",
   Greater = ">",
   Less = "<",
-  Regex = "(.*)"
+  Regex = "(.*)",
 }
 
 const formatValue = (value: string, type?: DashTableColType): any => {
@@ -90,7 +90,7 @@ const escapeCSV = (s: any, columnType?: DashTableColType): string | number => {
 export const generateDashTableRichCSV = ({
   data,
   cols,
-  timeCol
+  timeCol,
 }: {
   data: any[];
   cols: ColumnRichInfo[];
@@ -104,7 +104,10 @@ export const generateDashTableRichCSV = ({
   }, new Map<string, ColumnRichInfo>());
   let csvContent = timeCol ? "time" : "";
   if (colIds.length > 0) {
-    csvContent += (timeCol ? "," : "") + colIds.join(",") + "\n";
+    csvContent +=
+      (timeCol ? "," : "") +
+      colIds.map((name) => escapeCSV(name)).join(",") +
+      "\n";
   }
   data.forEach((row: any) => {
     let rt: any[] = [];
@@ -147,7 +150,7 @@ export const createRichFilter = ({
   params,
   setParams,
   removeButton,
-  className
+  className,
 }: {
   cols: ColumnRichInfo[];
   setCols: (cols: ColumnRichInfo[]) => void;
@@ -188,7 +191,7 @@ export const createRichFilter = ({
           <select
             onChange={(e) =>
               setParams({
-                [col.id]: formatValue(e.target.value, col.columnType)
+                [col.id]: formatValue(e.target.value, col.columnType),
               })
             }
             value={params[col.id] === null ? "" : params[col.id]}
@@ -212,7 +215,7 @@ export const createRichFilter = ({
             value={params[col.id] === null ? "" : params[col.id]}
             onChange={(e) =>
               setParams({
-                [col.id]: formatValue(e.target.value, col.columnType)
+                [col.id]: formatValue(e.target.value, col.columnType),
               })
             }
           />
@@ -266,7 +269,7 @@ export const pushRichColData = ({
   sort_value,
   className,
   cols,
-  addButton
+  addButton,
 }: {
   colsData: DashTableColData[];
   id: string;
@@ -302,7 +305,7 @@ export const pushRichColData = ({
       </>
     ),
     sort_value: sort_value === undefined ? value : sort_value,
-    className: className
+    className: className,
   };
   colsData.push(data);
 };
