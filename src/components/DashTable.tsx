@@ -224,7 +224,7 @@ export const DashTable = ({
                           (index % 2 === 0
                             ? "bmat-dashtable-row-even "
                             : "bmat-dashtable-row-odd ") +
-                          row.className || ""
+                          (row.className || "")
                       }
                     >
                       {row.data.map((col, index) => {
@@ -232,7 +232,7 @@ export const DashTable = ({
                           <td
                             key={`c${index}`}
                             className={`bmat-dashtable-col ${
-                              col?.className || ""
+                              (col?.className || "")
                             }`}
                           >
                             {col.value}
