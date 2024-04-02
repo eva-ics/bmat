@@ -143,6 +143,30 @@ export class Timestamp {
     return this.t;
   }
   /**
+   * Converts to milliseconds
+   *
+   * @returns {number}
+   */
+  toMillis(): number {
+    return Math.round(this.t * 1_000);
+  }
+  /**
+   * Converts to microseconds
+   *
+   * @returns {number}
+   */
+  toMicros(): number {
+    return Math.round(this.t * 1_000_000);
+  }
+  /**
+   * Converts to nanoseconds
+   *
+   * @returns {number}
+   */
+  toNanos(): number {
+    return Math.round(this.t * 1_000_000_000);
+  }
+  /**
    * Converts to RFC3339 string
    *
    * @param {boolean} [millis] - with milliseconds
