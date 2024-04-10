@@ -1,5 +1,3 @@
-import { evaluate } from "mathjs";
-
 /**
  * Formats number to en locale, replacing thousand separator with a custom one if defined
  *
@@ -111,7 +109,7 @@ const calculateFormulaSingle = (
     if (!formula || formula === "x") {
       return n;
     } else {
-      return evaluate(formula, { x: n });
+      return evaluateMath(formula, { x: n });
     }
   }
 };
@@ -126,3 +124,11 @@ const calculateFormulaBulk = (
     });
   }
 };
+
+function evaluateMath(expr: string, scope: any): number {
+  const expression = expr.replaceAll("^", "**");
+  return new Function(
+    ...Object.keys(scope),
+    `'use strict'; return (${expression})`
+  )(...Object.values(scope));
+}
