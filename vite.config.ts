@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
+    sourcemap: true,
     rollupOptions: {
       external: [
         "@emotion/react",
@@ -17,6 +18,7 @@ export default defineConfig({
         "@mui/system",
         "@mui/types",
         "@mui/utils",
+        "mathjs",
         "mui-color-input",
         "react",
         "react/jsx-runtime",
