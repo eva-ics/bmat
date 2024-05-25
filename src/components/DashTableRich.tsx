@@ -4,7 +4,8 @@ import { Timestamp } from "../time";
 export interface ColumnRichInfo {
   id: string;
   name: string;
-  enabled: boolean;
+  enabled?: boolean;
+  filterOnly?: boolean;
   columnType?: DashTableColType;
   filterInputSize?: number;
   filterActionKind?: DashTableFilterActionKind;
@@ -160,10 +161,13 @@ export const createRichFilter = ({
   className?: string;
 }): DashTableFilter =>
   cols.map((col) => {
-    let labelClassName = "bmat-dashtable-filter-label";
+    let labelClassName = col?.filterOnly
+      ? "bmat-dashtable-filter-only-label"
+      : "bmat-dashtable-filter-label";
     labelClassName +=
-      (col?.enabled === true ? " " : " bmat-dashtable-filter-label-off ") +
-      (className || "");
+      (col?.enabled || col?.filterOnly
+        ? " "
+        : " bmat-dashtable-filter-label-off ") + (className || "");
     const label = (
       <div className="bmat-dashtable-filter-label-container">
         <span
@@ -171,9 +175,11 @@ export const createRichFilter = ({
           className={labelClassName}
           onClick={(e) => {
             e.preventDefault();
-            col.enabled = !col.enabled;
-            const nc: ColumnRichInfo[] = [...cols];
-            setCols(nc);
+            if (!col.filterOnly) {
+              col.enabled = !col.enabled;
+              const nc: ColumnRichInfo[] = [...cols];
+              setCols(nc);
+            }
           }}
         >
           {col.name}
