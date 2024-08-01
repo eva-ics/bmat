@@ -107,7 +107,7 @@ export const generateDashTableRichCSV = ({
   if (colIds.length > 0) {
     csvContent +=
       (timeCol ? "," : "") +
-      colIds.map((name) => escapeCSV(name)).join(",") +
+      enabledCols.map(({ id, name }) => escapeCSV(name || id)).join(",") +
       "\n";
   }
   data.forEach((row: any) => {
