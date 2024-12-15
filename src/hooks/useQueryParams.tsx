@@ -134,7 +134,6 @@ const useStoreParams = (
       const sp = "?" + p.toString();
       if (sp !== window.location.search) {
         const url = `${window.location.pathname}${sp}`;
-        console.log(`useQueryParams: ${url}`);
         navigate(url, { replace: true });
       }
     }
