@@ -22,7 +22,8 @@ export default defineConfig({
         "mui-color-input",
         "react",
         "react/jsx-runtime",
-        "react-dom"
+        "react-dom",
+        "react-router-dom"
       ],
       onwarn(warning, warn) {
         if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
