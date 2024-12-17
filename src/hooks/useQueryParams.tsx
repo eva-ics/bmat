@@ -1,5 +1,5 @@
 import { useEffect, useState, Dispatch } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 /**
  * Encodes a boolean into Y or empty string
@@ -118,7 +118,7 @@ const useStoreParams = (
   components: Array<ComponentData<any>>,
   dependencies?: any
 ) => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   useEffect(() => {
     if (loaded) {
       const p = new URLSearchParams(document.location.search);
@@ -131,10 +131,27 @@ const useStoreParams = (
         }
         p.set(component.name, data);
       }
+      ////////work version use useNavigate(///////////
+      // const sp = "?" + p.toString();
+      // if (sp !== window.location.search) {
+      //   const url = `${window.location.pathname}${sp}`;
+      //   console.log(`useQueryParams: ${url}`);
+      //   navigate(url, { replace: true });
+      // }
+
+      ////////error///////////
+      // const sp = "?" + p.toString();
+      // if (sp !== window.location.search) {
+      //   const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}${sp}`;
+      //   console.log(`useQueryParams: ${url}`);
+      //   window.history.pushState({ path: url }, "", url);
+      // }
+      //////////test vesion use window.history/////////////
       const sp = "?" + p.toString();
       if (sp !== window.location.search) {
         const url = `${window.location.pathname}${sp}`;
-        navigate(url, { replace: true });
+        //console.log(`updateQueryParams: ${url}`);
+        window.history.replaceState(null, "", url);
       }
     }
   }, dependencies);
