@@ -131,22 +131,6 @@ const useStoreParams = (
         }
         p.set(component.name, data);
       }
-      ////////work version use useNavigate(///////////
-      // const sp = "?" + p.toString();
-      // if (sp !== window.location.search) {
-      //   const url = `${window.location.pathname}${sp}`;
-      //   console.log(`useQueryParams: ${url}`);
-      //   navigate(url, { replace: true });
-      // }
-
-      ////////error///////////
-      // const sp = "?" + p.toString();
-      // if (sp !== window.location.search) {
-      //   const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}${sp}`;
-      //   console.log(`useQueryParams: ${url}`);
-      //   window.history.pushState({ path: url }, "", url);
-      // }
-      //////////test vesion use window.history/////////////
       const sp = "?" + p.toString();
       if (sp !== window.location.search) {
         const url = `${window.location.pathname}${sp}`;
