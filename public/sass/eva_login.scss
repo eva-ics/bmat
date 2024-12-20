@@ -1,6 +1,6 @@
 //This project is adapted for mobile, tablet devices. The "mixin_rules" mixin is used to set the media rules. All styles for a specific device are in the rules
 //   @include media(mobile | tablet | desktop) , where mobile, tablet and desktop are names of rules from mixin.
-
+@use "./mixin.scss" as *;
 //The CSS rule targets the input element with the class "eva.login".
 input.eva.login {
   width: 100%;
@@ -12,14 +12,14 @@ input.eva.login {
   color: black;
   padding: 15px;
   //The CSS rule targets the input element with the class "eva.login.checkbox".
-  &.checkbox{
+  &.checkbox {
     width: 24px;
     height: 24px;
     cursor: pointer;
     transform: translateY(-4px);
   }
 
-  &:focus{
+  &:focus {
     outline: none;
     border: 0.5px solid #0085ff;
   }
@@ -46,11 +46,11 @@ button.eva.login {
   transition: 0.2s;
   cursor: pointer;
 
-  @include media(desktop){
+  @include media(desktop) {
     padding: 16px 0;
     font-size: 22px;
 
-    &:hover{
+    &:hover {
       background-color: #3293ea;
       transition: 0.2s;
     }
@@ -75,21 +75,21 @@ div.eva.login.container {
 }
 
 //The CSS rule targets the button element with the class "eva.login.form-container".
-div.eva.login.form-container{
+div.eva.login.form-container {
   width: 100%;
   margin-top: 50px;
 
-  @include media(tablet){
+  @include media(tablet) {
     width: 390px;
   }
 
-  @include media(desktop){
+  @include media(desktop) {
     margin-top: 20px;
   }
 }
 
 //The CSS rule targets the form element with the class "eva.login".
-form.eva.login{
+form.eva.login {
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -103,7 +103,7 @@ div.eva.login.logo {
   height: 60px;
   display: inline-block;
 
-  &:before{
+  &:before {
     content: url("https://www.bohemia-automation.com/images/bma.svg");
   }
 }
@@ -115,7 +115,7 @@ div.eva.login.header {
   line-height: normal;
   color: #0085ff;
 
-  &:before{
+  &:before {
     margin-top: 30px;
     display: flex;
     align-items: center;
@@ -129,12 +129,12 @@ div.eva.login.header {
     text-align: center;
     color: #fff;
 
-    @include media(desktop){
+    @include media(desktop) {
       font-size: 30px;
     }
   }
 
-  @include media(desktop){
+  @include media(desktop) {
     font-size: 30px;
   }
 }
@@ -161,7 +161,7 @@ div.eva.login.row.text > label {
   line-height: normal;
   color: #c1c1c1;
 
-  @include media(desktop){
+  @include media(desktop) {
     font-size: 16px;
   }
 }
@@ -185,13 +185,13 @@ div.eva.login.row.remember {
   line-height: normal;
   color: #fff;
 
-  &>label{
+  & > label {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 
-    @include media(desktop){
+    @include media(desktop) {
       font-size: 16px;
     }
   }
@@ -219,17 +219,15 @@ div.eva.login.error {
 
 //The CSS rule targets the span elements with the class "eva.state". Styles for success | disconnect | error messages.
 span.eva.state {
-
-  &.ok{
-
+  &.ok {
   }
 
-  &.error{
+  &.error {
     color: red;
     font-weight: bold;
   }
 
-  &.disconnected{
+  &.disconnected {
     color: #999;
   }
 }

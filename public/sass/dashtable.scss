@@ -1,3 +1,5 @@
+@use "./mixin.scss" as *;
+
 .bmat-dashtable-container {
 }
 
@@ -65,12 +67,12 @@
 }
 
 .bmat-dashtable-table-container {
+  overflow: auto;
   @include media(tablet) {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
   }
-  overflow: auto;
 }
 
 .bmat-dashtable {
@@ -114,13 +116,12 @@
   z-index: 2;
   text-align: left;
   white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
 
   @include media(tablet) {
     font-size: 14px;
   }
-
-  user-select: none;
-  cursor: pointer;
 }
 
 .bmat-dashtable-row-even {

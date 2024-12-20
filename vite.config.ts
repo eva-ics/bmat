@@ -23,14 +23,15 @@ export default defineConfig({
         "react",
         "react/jsx-runtime",
         "react-dom",
-        "react-router-dom"
+        "react-router-dom",
+        "sass",
       ],
       onwarn(warning, warn) {
         if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
           return;
         }
         warn(warning);
-      }
+      },
     },
     lib: {
       entry: {
@@ -41,9 +42,9 @@ export default defineConfig({
         log: "./src/log.ts",
         numbers: "./src/numbers.ts",
         time: "./src/time.ts",
-        tools: "./src/tools.ts"
+        tools: "./src/tools.ts",
       },
-      formats: ["es", "cjs"]
-    }
-  }
+      formats: ["es", "cjs"],
+    },
+  },
 });
