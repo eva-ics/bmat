@@ -207,7 +207,7 @@ export const DashTable = ({
                       key={`h${index}`}
                     >
                       {col_name}
-                      {col_arrow}
+                      <span className="bmat-dashtable-sort-arrow">{col_arrow}</span>
                     </th>
                   );
                 })}
