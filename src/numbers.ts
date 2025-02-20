@@ -63,7 +63,7 @@ export const parseNumber = (
   if (value.length === 0 && params?.allow_undefined) {
     return undefined;
   }
-  const val = parseFloat(value);
+  const val = Number(value);
   if (isNaN(val)) {
     if (params?.allow_nan) {
       return val;

@@ -42,7 +42,7 @@ export const encoderFloat = (v?: number): string => {
  * @returns {number | null}
  */
 export const decoderFloat = (v: string): number | null => {
-  return v === "" ? null : parseFloat(v);
+  return v === "" ? null : Number(v);
 };
 
 /**
