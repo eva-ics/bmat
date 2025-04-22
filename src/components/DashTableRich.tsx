@@ -22,7 +22,8 @@ export enum DashTableColType {
 export enum DashTableFilterFieldInput {
   Text = "text",
   Select = "select",
-  SelectWithEmpty = "select_with_empty"
+  SelectWithEmpty = "select_with_empty",
+  None = "none"
 }
 
 const getfilterActionKindHelp = (kind?: DashTableFilterActionKind): string => {
@@ -185,12 +186,16 @@ export const createRichFilter = ({
           {col.name}
         </span>{" "}
         <span title={getfilterActionKindHelp(col.filterActionKind)}>
-          {col.filterActionKind || "="}
+          {col.filterFieldInput == DashTableFilterFieldInput.None
+            ? ""
+            : col.filterActionKind || "="}
         </span>
       </div>
     );
     let input;
     switch (col.filterFieldInput) {
+      case DashTableFilterFieldInput.None:
+        return [label, <div className="bmat-dashtable-filter-spacer"></div>];
       case DashTableFilterFieldInput.Select:
       case DashTableFilterFieldInput.SelectWithEmpty:
         input = (
